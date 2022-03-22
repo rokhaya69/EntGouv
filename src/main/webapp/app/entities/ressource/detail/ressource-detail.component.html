@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="ressource">
+      <h2 data-cy="ressourceDetailsHeading"><span jhiTranslate="entMefpaiApp.ressource.detail.title">Ressource</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ ressource.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.ressource.libelRessource">Libel Ressource</span></dt>
+        <dd>
+          <span>{{ ressource.libelRessource }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.ressource.typeRessource">Type Ressource</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'entMefpaiApp.TypeRessource.' + ressource.typeRessource }}">{{ ressource.typeRessource }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.ressource.lienRessource">Lien Ressource</span></dt>
+        <dd>
+          <span>{{ ressource.lienRessource }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.ressource.dateMise">Date Mise</span></dt>
+        <dd>
+          <span>{{ ressource.dateMise | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.ressource.apprenant">Apprenant</span></dt>
+        <dd>
+          <div *ngIf="ressource.apprenant">
+            <a [routerLink]="['/apprenant', ressource.apprenant?.id, 'view']">{{ ressource.apprenant?.nom }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.ressource.groupe">Groupe</span></dt>
+        <dd>
+          <div *ngIf="ressource.groupe">
+            <a [routerLink]="['/groupe', ressource.groupe?.id, 'view']">{{ ressource.groupe?.nomGroupe }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.ressource.cours">Cours</span></dt>
+        <dd>
+          <div *ngIf="ressource.cours">
+            <a [routerLink]="['/cours', ressource.cours?.id, 'view']">{{ ressource.cours?.libelleCours }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.ressource.persoAdmin">Perso Admin</span></dt>
+        <dd>
+          <div *ngIf="ressource.persoAdmin">
+            <a [routerLink]="['/perso-admin', ressource.persoAdmin?.id, 'view']">{{ ressource.persoAdmin?.nom }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/ressource', ressource.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

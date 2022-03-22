@@ -1,0 +1,36 @@
+{
+  "applications": ["entMefpai"],
+  "changelogDate": "20220322133143",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "syllabus",
+  "fields": [
+    {
+      "fieldName": "syllabus",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Syllabus",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "cours",
+      "otherEntityRelationshipName": "syllabus",
+      "ownerSide": false,
+      "relationshipName": "cours",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "nomProgram",
+      "otherEntityName": "programme",
+      "otherEntityRelationshipName": "syllabus",
+      "relationshipName": "programme",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

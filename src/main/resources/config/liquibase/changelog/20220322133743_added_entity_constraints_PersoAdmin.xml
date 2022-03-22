@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity PersoAdmin.
+    -->
+    <changeSet id="20220322133743-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="perso_admin"
+                                 constraintName="fk_perso_admin__user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="perso_admin_id"
+                                 baseTableName="rel_perso_admin__evaluation"
+                                 constraintName="fk_rel_perso_admin__evaluation__perso_admin_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="perso_admin"/>
+
+        <addForeignKeyConstraint baseColumnNames="evaluation_id"
+                                 baseTableName="rel_perso_admin__evaluation"
+                                 constraintName="fk_rel_perso_admin__evaluation__evaluation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="evaluation"/>
+
+        <addForeignKeyConstraint baseColumnNames="poste_id"
+                                 baseTableName="perso_admin"
+                                 constraintName="fk_perso_admin__poste_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="poste"/>
+    </changeSet>
+</databaseChangeLog>

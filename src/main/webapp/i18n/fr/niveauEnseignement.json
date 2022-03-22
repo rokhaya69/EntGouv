@@ -1,0 +1,9 @@
+{
+  "entMefpaiApp": {
+    "NiveauEnseignement": {
+      "null": "",
+      "LyceeTech": "LyceeTech",
+      "CentreFP": "CentreFP"
+    }
+  }
+}

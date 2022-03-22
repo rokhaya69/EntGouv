@@ -1,0 +1,82 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="persoAdmin">
+      <h2 data-cy="persoAdminDetailsHeading"><span jhiTranslate="entMefpaiApp.persoAdmin.detail.title">Perso Admin</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ persoAdmin.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.persoAdmin.nom">Nom</span></dt>
+        <dd>
+          <span>{{ persoAdmin.nom }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.persoAdmin.prenom">Prenom</span></dt>
+        <dd>
+          <span>{{ persoAdmin.prenom }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.persoAdmin.email">Email</span></dt>
+        <dd>
+          <span>{{ persoAdmin.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.persoAdmin.adresse">Adresse</span></dt>
+        <dd>
+          <span>{{ persoAdmin.adresse }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.persoAdmin.telephone">Telephone</span></dt>
+        <dd>
+          <span>{{ persoAdmin.telephone }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.persoAdmin.sexe">Sexe</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'entMefpaiApp.Sexe.' + persoAdmin.sexe }}">{{ persoAdmin.sexe }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.persoAdmin.photo">Photo</span></dt>
+        <dd>
+          <div *ngIf="persoAdmin.photo">
+            <a (click)="openFile(persoAdmin.photo, persoAdmin.photoContentType)">
+              <img
+                [src]="'data:' + persoAdmin.photoContentType + ';base64,' + persoAdmin.photo"
+                style="max-width: 100%"
+                alt="persoAdmin image"
+              />
+            </a>
+            {{ persoAdmin.photoContentType }}, {{ byteSize(persoAdmin.photo) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.persoAdmin.user">User</span></dt>
+        <dd>
+          <span>{{ persoAdmin.user?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.persoAdmin.evaluation">Evaluation</span></dt>
+        <dd>
+          <span *ngFor="let evaluation of persoAdmin.evaluations; let last = last">
+            <a [routerLink]="['/evaluation', evaluation?.id, 'view']">{{ evaluation.nomEvalu }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.persoAdmin.poste">Poste</span></dt>
+        <dd>
+          <div *ngIf="persoAdmin.poste">
+            <a [routerLink]="['/poste', persoAdmin.poste?.id, 'view']">{{ persoAdmin.poste?.nomPoste }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/perso-admin', persoAdmin.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

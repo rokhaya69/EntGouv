@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="classe">
+      <h2 data-cy="classeDetailsHeading"><span jhiTranslate="entMefpaiApp.classe.detail.title">Classe</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ classe.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.classe.titre">Titre</span></dt>
+        <dd>
+          <span>{{ classe.titre }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.classe.niveauEtude">Niveau Etude</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'entMefpaiApp.NiveauEtude.' + classe.niveauEtude }}">{{ classe.niveauEtude }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.classe.filiere">Filiere</span></dt>
+        <dd>
+          <div *ngIf="classe.filiere">
+            <a [routerLink]="['/filiere', classe.filiere?.id, 'view']">{{ classe.filiere?.nomFiliere }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.classe.serie">Serie</span></dt>
+        <dd>
+          <div *ngIf="classe.serie">
+            <a [routerLink]="['/serie', classe.serie?.id, 'view']">{{ classe.serie?.nomSerie }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/classe', classe.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

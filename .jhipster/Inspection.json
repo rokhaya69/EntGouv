@@ -1,0 +1,50 @@
+{
+  "applications": ["entMefpai"],
+  "changelogDate": "20220322134543",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "inspection",
+  "fields": [
+    {
+      "fieldName": "nomInspec",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "typeInspec",
+      "fieldType": "TypeInspec",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "IA,IEF"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Inspection",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "nomCom",
+      "otherEntityName": "commune",
+      "otherEntityRelationshipName": "inspection",
+      "ownerSide": true,
+      "relationshipName": "commune",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "nom",
+      "otherEntityName": "persoAdmin",
+      "otherEntityRelationshipName": "inspection",
+      "ownerSide": true,
+      "relationshipName": "persoAdmin",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "etablissement",
+      "otherEntityRelationshipName": "inspection",
+      "relationshipName": "etablissement",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

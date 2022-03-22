@@ -1,0 +1,29 @@
+{
+  "applications": ["entMefpai"],
+  "changelogDate": "20220322133043",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "contenu",
+  "fields": [
+    {
+      "fieldName": "contenu",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Contenu",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "seance",
+      "otherEntityRelationshipName": "contenu",
+      "ownerSide": true,
+      "relationshipName": "seance",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}

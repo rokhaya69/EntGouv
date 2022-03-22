@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="inspection">
+      <h2 data-cy="inspectionDetailsHeading"><span jhiTranslate="entMefpaiApp.inspection.detail.title">Inspection</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ inspection.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.inspection.nomInspec">Nom Inspec</span></dt>
+        <dd>
+          <span>{{ inspection.nomInspec }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.inspection.typeInspec">Type Inspec</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'entMefpaiApp.TypeInspec.' + inspection.typeInspec }}">{{ inspection.typeInspec }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.inspection.commune">Commune</span></dt>
+        <dd>
+          <div *ngIf="inspection.commune">
+            <a [routerLink]="['/commune', inspection.commune?.id, 'view']">{{ inspection.commune?.nomCom }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.inspection.persoAdmin">Perso Admin</span></dt>
+        <dd>
+          <div *ngIf="inspection.persoAdmin">
+            <a [routerLink]="['/perso-admin', inspection.persoAdmin?.id, 'view']">{{ inspection.persoAdmin?.nom }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/inspection', inspection.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

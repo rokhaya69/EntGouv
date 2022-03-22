@@ -1,0 +1,54 @@
+{
+  "applications": ["entMefpai"],
+  "changelogDate": "20220322132543",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "classe",
+  "fields": [
+    {
+      "fieldName": "titre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "niveauEtude",
+      "fieldType": "NiveauEtude",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Seconde,Premiere,Terminale,CAP1,CAP2,CAP3,BEP1,BEP2,BT1,BT2,BT3,BTS1,BTS2"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Classe",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "cours",
+      "otherEntityRelationshipName": "classe",
+      "relationshipName": "cours",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "groupe",
+      "otherEntityRelationshipName": "classe",
+      "relationshipName": "groupe",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "nomFiliere",
+      "otherEntityName": "filiere",
+      "otherEntityRelationshipName": "classe",
+      "relationshipName": "filiere",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nomSerie",
+      "otherEntityName": "serie",
+      "otherEntityRelationshipName": "classe",
+      "relationshipName": "serie",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

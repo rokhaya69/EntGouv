@@ -1,0 +1,89 @@
+{
+  "applications": ["entMefpai"],
+  "changelogDate": "20220322133743",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "perso_admin",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "prenom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"],
+      "options": {
+        "email": true,
+        "unique": true
+      }
+    },
+    {
+      "fieldName": "adresse",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"],
+      "options": {
+        "unique": true
+      }
+    },
+    {
+      "fieldName": "sexe",
+      "fieldType": "Sexe",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Masculin,Feminin"
+    },
+    {
+      "fieldName": "photo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PersoAdmin",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "persoAdmin",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "ressource",
+      "otherEntityRelationshipName": "persoAdmin",
+      "relationshipName": "ressource",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "nomEvalu",
+      "otherEntityName": "evaluation",
+      "otherEntityRelationshipName": "persoAdmin",
+      "ownerSide": true,
+      "relationshipName": "evaluation",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "nomPoste",
+      "otherEntityName": "poste",
+      "otherEntityRelationshipName": "persoAdmin",
+      "relationshipName": "poste",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

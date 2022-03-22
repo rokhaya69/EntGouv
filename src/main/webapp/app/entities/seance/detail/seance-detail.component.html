@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="seance">
+      <h2 data-cy="seanceDetailsHeading"><span jhiTranslate="entMefpaiApp.seance.detail.title">Seance</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ seance.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.seance.dateSeance">Date Seance</span></dt>
+        <dd>
+          <span>{{ seance.dateSeance | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.seance.dateDebut">Date Debut</span></dt>
+        <dd>
+          <span>{{ seance.dateDebut | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.seance.dateFin">Date Fin</span></dt>
+        <dd>
+          <span>{{ seance.dateFin | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.seance.cours">Cours</span></dt>
+        <dd>
+          <div *ngIf="seance.cours">
+            <a [routerLink]="['/cours', seance.cours?.id, 'view']">{{ seance.cours?.libelleCours }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.seance.salle">Salle</span></dt>
+        <dd>
+          <div *ngIf="seance.salle">
+            <a [routerLink]="['/salle', seance.salle?.id, 'view']">{{ seance.salle?.libelleSalle }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.seance.groupe">Groupe</span></dt>
+        <dd>
+          <div *ngIf="seance.groupe">
+            <a [routerLink]="['/groupe', seance.groupe?.id, 'view']">{{ seance.groupe?.nomGroupe }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/seance', seance.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

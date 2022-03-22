@@ -1,0 +1,90 @@
+{
+  "applications": ["entMefpai"],
+  "changelogDate": "20220322134743",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "evaluation",
+  "fields": [
+    {
+      "fieldName": "nomEvalu",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "typeEvalu",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateEva",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "heureDebEva",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "heureFinEva",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Evaluation",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "note",
+      "otherEntityRelationshipName": "evaluation",
+      "relationshipName": "note",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "absence",
+      "otherEntityRelationshipName": "evaluation",
+      "relationshipName": "absence",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "intituleMatiere",
+      "otherEntityName": "matiere",
+      "otherEntityRelationshipName": "evaluation",
+      "relationshipName": "matiere",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nomGroupe",
+      "otherEntityName": "groupe",
+      "otherEntityRelationshipName": "evaluation",
+      "relationshipName": "groupe",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nom",
+      "otherEntityName": "professeur",
+      "otherEntityRelationshipName": "evaluation",
+      "relationshipName": "professeur",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "libelleSalle",
+      "otherEntityName": "salle",
+      "otherEntityRelationshipName": "evaluation",
+      "relationshipName": "salle",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nom",
+      "otherEntityName": "persoAdmin",
+      "otherEntityRelationshipName": "evaluation",
+      "ownerSide": false,
+      "relationshipName": "persoAdmin",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

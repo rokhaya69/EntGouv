@@ -1,0 +1,178 @@
+package sn.thiane.ent.mefpai.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import sn.thiane.ent.mefpai.domain.enumeration.TypeInspec;
+
+/**
+ * A Inspection.
+ */
+@Entity
+@Table(name = "inspection")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class Inspection implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @NotNull
+    @Column(name = "nom_inspec", nullable = false)
+    private String nomInspec;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_inspec", nullable = false)
+    private TypeInspec typeInspec;
+
+    @JsonIgnoreProperties(value = { "departement" }, allowSetters = true)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Commune commune;
+
+    @JsonIgnoreProperties(value = { "user", "ressources", "evaluations", "poste" }, allowSetters = true)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private PersoAdmin persoAdmin;
+
+    @OneToMany(mappedBy = "inspection")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "persoAdmin", "professeurs", "filieres", "series", "ressources", "inspection" }, allowSetters = true)
+    private Set<Etablissement> etablissements = new HashSet<>();
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public Inspection id(Long id) {
+        this.setId(id);
+        return this;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNomInspec() {
+        return this.nomInspec;
+    }
+
+    public Inspection nomInspec(String nomInspec) {
+        this.setNomInspec(nomInspec);
+        return this;
+    }
+
+    public void setNomInspec(String nomInspec) {
+        this.nomInspec = nomInspec;
+    }
+
+    public TypeInspec getTypeInspec() {
+        return this.typeInspec;
+    }
+
+    public Inspection typeInspec(TypeInspec typeInspec) {
+        this.setTypeInspec(typeInspec);
+        return this;
+    }
+
+    public void setTypeInspec(TypeInspec typeInspec) {
+        this.typeInspec = typeInspec;
+    }
+
+    public Commune getCommune() {
+        return this.commune;
+    }
+
+    public void setCommune(Commune commune) {
+        this.commune = commune;
+    }
+
+    public Inspection commune(Commune commune) {
+        this.setCommune(commune);
+        return this;
+    }
+
+    public PersoAdmin getPersoAdmin() {
+        return this.persoAdmin;
+    }
+
+    public void setPersoAdmin(PersoAdmin persoAdmin) {
+        this.persoAdmin = persoAdmin;
+    }
+
+    public Inspection persoAdmin(PersoAdmin persoAdmin) {
+        this.setPersoAdmin(persoAdmin);
+        return this;
+    }
+
+    public Set<Etablissement> getEtablissements() {
+        return this.etablissements;
+    }
+
+    public void setEtablissements(Set<Etablissement> etablissements) {
+        if (this.etablissements != null) {
+            this.etablissements.forEach(i -> i.setInspection(null));
+        }
+        if (etablissements != null) {
+            etablissements.forEach(i -> i.setInspection(this));
+        }
+        this.etablissements = etablissements;
+    }
+
+    public Inspection etablissements(Set<Etablissement> etablissements) {
+        this.setEtablissements(etablissements);
+        return this;
+    }
+
+    public Inspection addEtablissement(Etablissement etablissement) {
+        this.etablissements.add(etablissement);
+        etablissement.setInspection(this);
+        return this;
+    }
+
+    public Inspection removeEtablissement(Etablissement etablissement) {
+        this.etablissements.remove(etablissement);
+        etablissement.setInspection(null);
+        return this;
+    }
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Inspection)) {
+            return false;
+        }
+        return id != null && id.equals(((Inspection) o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
+    }
+
+    // prettier-ignore
+    @Override
+    public String toString() {
+        return "Inspection{" +
+            "id=" + getId() +
+            ", nomInspec='" + getNomInspec() + "'" +
+            ", typeInspec='" + getTypeInspec() + "'" +
+            "}";
+    }
+}

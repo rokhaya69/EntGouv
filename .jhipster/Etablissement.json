@@ -1,0 +1,69 @@
+{
+  "applications": ["entMefpai"],
+  "changelogDate": "20220322133843",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "etablissement",
+  "fields": [
+    {
+      "fieldName": "nomEtab",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "typeEtab",
+      "fieldType": "TypeEtab",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "LyceeTech,CentreFP"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Etablissement",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "nom",
+      "otherEntityName": "persoAdmin",
+      "otherEntityRelationshipName": "etablissement",
+      "ownerSide": true,
+      "relationshipName": "persoAdmin",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "professeur",
+      "otherEntityRelationshipName": "etablissement",
+      "relationshipName": "professeur",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "filiere",
+      "otherEntityRelationshipName": "etablissement",
+      "relationshipName": "filiere",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "serie",
+      "otherEntityRelationshipName": "etablissement",
+      "relationshipName": "serie",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "libelRessource",
+      "otherEntityName": "ressource",
+      "otherEntityRelationshipName": "etablissement",
+      "ownerSide": true,
+      "relationshipName": "ressource",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "nomInspec",
+      "otherEntityName": "inspection",
+      "otherEntityRelationshipName": "etablissement",
+      "relationshipName": "inspection",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

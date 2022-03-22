@@ -1,0 +1,66 @@
+{
+  "applications": ["entMefpai"],
+  "changelogDate": "20220322132943",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "seance",
+  "fields": [
+    {
+      "fieldName": "dateSeance",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Seance",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "contenu",
+      "otherEntityRelationshipName": "seance",
+      "ownerSide": false,
+      "relationshipName": "contenu",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "libelleCours",
+      "otherEntityName": "cours",
+      "otherEntityRelationshipName": "seance",
+      "relationshipName": "cours",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "libelleSalle",
+      "otherEntityName": "salle",
+      "otherEntityRelationshipName": "seance",
+      "relationshipName": "salle",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nomGroupe",
+      "otherEntityName": "groupe",
+      "otherEntityRelationshipName": "seance",
+      "relationshipName": "groupe",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "absence",
+      "otherEntityRelationshipName": "seance",
+      "relationshipName": "absence",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

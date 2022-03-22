@@ -1,0 +1,36 @@
+{
+  "applications": ["entMefpai"],
+  "changelogDate": "20220322134043",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "serie",
+  "fields": [
+    {
+      "fieldName": "nomSerie",
+      "fieldType": "NomSerie",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "STEG,STIDD_M,STIDD_E,S3,S4,S5,F6"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Serie",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "classe",
+      "otherEntityRelationshipName": "serie",
+      "relationshipName": "classe",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "nomEtab",
+      "otherEntityName": "etablissement",
+      "otherEntityRelationshipName": "serie",
+      "relationshipName": "etablissement",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

@@ -1,0 +1,29 @@
+{
+  "applications": ["entMefpai"],
+  "changelogDate": "20220322133443",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "poste",
+  "fields": [
+    {
+      "fieldName": "nomPoste",
+      "fieldType": "NomPoste",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Mefpai,Inspecteur,Proviseur,Directeur,Surveillant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Poste",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "persoAdmin",
+      "otherEntityRelationshipName": "poste",
+      "relationshipName": "persoAdmin",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}
