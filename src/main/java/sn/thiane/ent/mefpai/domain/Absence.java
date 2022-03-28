@@ -31,7 +31,7 @@ public class Absence implements Serializable {
     private Boolean justifie;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "contenu", "cours", "salle", "groupe", "absences" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "cours", "salle", "groupe", "absences" }, allowSetters = true)
     private Seance seance;
 
     @ManyToOne

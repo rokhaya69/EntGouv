@@ -33,6 +33,9 @@
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
           <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="jourSeance">
+            <span jhiTranslate="entMefpaiApp.seance.jourSeance">Jour Seance</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col" jhiSortBy="dateSeance">
             <span jhiTranslate="entMefpaiApp.seance.dateSeance">Date Seance</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -59,6 +62,7 @@
           <td>
             <a [routerLink]="['/seance', seance.id, 'view']">{{ seance.id }}</a>
           </td>
+          <td jhiTranslate="{{ 'entMefpaiApp.Jour.' + seance.jourSeance }}">{{ seance.jourSeance }}</td>
           <td>{{ seance.dateSeance | formatMediumDate }}</td>
           <td>{{ seance.dateDebut | formatMediumDatetime }}</td>
           <td>{{ seance.dateFin | formatMediumDatetime }}</td>

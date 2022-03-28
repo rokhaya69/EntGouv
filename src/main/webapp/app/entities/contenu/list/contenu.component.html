@@ -36,7 +36,7 @@
           <th scope="col" jhiSortBy="contenu">
             <span jhiTranslate="entMefpaiApp.contenu.contenu">Contenu</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="seance.id">
+          <th scope="col" jhiSortBy="seance.jourSeance">
             <span jhiTranslate="entMefpaiApp.contenu.seance">Seance</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
@@ -50,7 +50,7 @@
           <td>{{ contenu.contenu }}</td>
           <td>
             <div *ngIf="contenu.seance">
-              <a [routerLink]="['/seance', contenu.seance?.id, 'view']">{{ contenu.seance?.id }}</a>
+              <a [routerLink]="['/seance', contenu.seance?.id, 'view']">{{ contenu.seance?.jourSeance }}</a>
             </div>
           </td>
           <td class="text-end">

@@ -27,18 +27,18 @@ public interface CoursRepository extends JpaRepository<Cours, Long> {
     }
 
     @Query(
-        value = "select distinct cours from Cours cours left join fetch cours.matiere left join fetch cours.classe left join fetch cours.professeur",
+        value = "select distinct cours from Cours cours left join fetch cours.syllabus left join fetch cours.matiere left join fetch cours.classe left join fetch cours.professeur",
         countQuery = "select count(distinct cours) from Cours cours"
     )
     Page<Cours> findAllWithToOneRelationships(Pageable pageable);
 
     @Query(
-        "select distinct cours from Cours cours left join fetch cours.matiere left join fetch cours.classe left join fetch cours.professeur"
+        "select distinct cours from Cours cours left join fetch cours.syllabus left join fetch cours.matiere left join fetch cours.classe left join fetch cours.professeur"
     )
     List<Cours> findAllWithToOneRelationships();
 
     @Query(
-        "select cours from Cours cours left join fetch cours.matiere left join fetch cours.classe left join fetch cours.professeur where cours.id =:id"
+        "select cours from Cours cours left join fetch cours.syllabus left join fetch cours.matiere left join fetch cours.classe left join fetch cours.professeur where cours.id =:id"
     )
     Optional<Cours> findOneWithToOneRelationships(@Param("id") Long id);
 }

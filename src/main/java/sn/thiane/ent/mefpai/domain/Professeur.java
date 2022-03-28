@@ -82,7 +82,10 @@ public class Professeur implements Serializable {
     private Set<Evaluation> evaluations = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "persoAdmin", "professeurs", "filieres", "series", "ressources", "inspection" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "persoAdmin", "commune", "professeurs", "filieres", "series", "ressources", "inspection" },
+        allowSetters = true
+    )
     private Etablissement etablissement;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

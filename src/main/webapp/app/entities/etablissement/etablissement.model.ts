@@ -1,4 +1,5 @@
 import { IPersoAdmin } from 'app/entities/perso-admin/perso-admin.model';
+import { ICommune } from 'app/entities/commune/commune.model';
 import { IProfesseur } from 'app/entities/professeur/professeur.model';
 import { IFiliere } from 'app/entities/filiere/filiere.model';
 import { ISerie } from 'app/entities/serie/serie.model';
@@ -10,7 +11,10 @@ export interface IEtablissement {
   id?: number;
   nomEtab?: string;
   typeEtab?: TypeEtab;
+  email?: string;
+  telephone?: string;
   persoAdmin?: IPersoAdmin | null;
+  commune?: ICommune | null;
   professeurs?: IProfesseur[] | null;
   filieres?: IFiliere[] | null;
   series?: ISerie[] | null;
@@ -23,7 +27,10 @@ export class Etablissement implements IEtablissement {
     public id?: number,
     public nomEtab?: string,
     public typeEtab?: TypeEtab,
+    public email?: string,
+    public telephone?: string,
     public persoAdmin?: IPersoAdmin | null,
+    public commune?: ICommune | null,
     public professeurs?: IProfesseur[] | null,
     public filieres?: IFiliere[] | null,
     public series?: ISerie[] | null,

@@ -18,10 +18,10 @@
         "title": "Seance"
       },
       "id": "ID",
+      "jourSeance": "Jour Seance",
       "dateSeance": "Date Seance",
       "dateDebut": "Date Debut",
       "dateFin": "Date Fin",
-      "contenu": "Contenu",
       "cours": "Cours",
       "salle": "Salle",
       "groupe": "Groupe",

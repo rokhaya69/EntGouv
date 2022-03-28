@@ -9,7 +9,7 @@ export enum NomFiliere {
 
   Artisanat = 'Artisanat',
 
-  BTP = 'BTP',
+  Batimat_Travaux_Publiques = 'Batimat_Travaux_Publiques',
 
   Mecanique = 'Mecanique',
 
@@ -19,7 +19,7 @@ export enum NomFiliere {
 
   Agroalimentaire = 'Agroalimentaire',
 
-  Electrotech_Elec_Ener = 'Electrotech_Elec_Ener',
+  Electrotechnique_Electrique_Energetique = 'Electrotechnique_Electrique_Energetique',
 
   Hydraulique = 'Hydraulique',
 
@@ -29,17 +29,17 @@ export enum NomFiliere {
 
   Beaute_Esthetique = 'Beaute_Esthetique',
 
-  Dev_Territorial = 'Dev_Territorial',
+  Developpement_Territorial = 'Developpement_Territorial',
 
   Droit = 'Droit',
 
-  Eco_Ges_Com_Logis = 'Eco_Ges_Com_Logis',
+  Economie_Gestion_Commerce_Logistique = 'Economie_Gestion_Commerce_Logistique',
 
-  Insdus_culturelle_et_creative = 'Insdus_culturelle_et_creative',
+  Insdustrie_culturelle_et_creative = 'Insdustrie_culturelle_et_creative',
 
-  Info_et_numerique = 'Info_et_numerique',
+  Informatique_et_numerique = 'Informatique_et_numerique',
 
-  Restau_et_hotellorie = 'Restau_et_hotellorie',
+  Restauration_et_hotellorie = 'Restauration_et_hotellorie',
 
   Sante_biologie_chimie = 'Sante_biologie_chimie',
 

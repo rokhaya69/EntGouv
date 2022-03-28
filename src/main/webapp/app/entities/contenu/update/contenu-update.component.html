@@ -35,7 +35,7 @@
               [ngValue]="seanceOption.id === editForm.get('seance')!.value?.id ? editForm.get('seance')!.value : seanceOption"
               *ngFor="let seanceOption of seancesCollection; trackBy: trackSeanceById"
             >
-              {{ seanceOption.id }}
+              {{ seanceOption.jourSeance }}
             </option>
           </select>
         </div>

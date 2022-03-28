@@ -26,7 +26,7 @@ public class Contenu implements Serializable {
     @Column(name = "contenu", nullable = false, unique = true)
     private String contenu;
 
-    @JsonIgnoreProperties(value = { "contenu", "cours", "salle", "groupe", "absences" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "cours", "salle", "groupe", "absences" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
     private Seance seance;

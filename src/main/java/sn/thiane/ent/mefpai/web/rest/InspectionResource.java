@@ -137,6 +137,12 @@ public class InspectionResource {
                 if (inspection.getTypeInspec() != null) {
                     existingInspection.setTypeInspec(inspection.getTypeInspec());
                 }
+                if (inspection.getEmail() != null) {
+                    existingInspection.setEmail(inspection.getEmail());
+                }
+                if (inspection.getTelephone() != null) {
+                    existingInspection.setTelephone(inspection.getTelephone());
+                }
 
                 return existingInspection;
             })

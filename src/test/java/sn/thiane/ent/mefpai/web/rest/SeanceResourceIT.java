@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import sn.thiane.ent.mefpai.IntegrationTest;
 import sn.thiane.ent.mefpai.domain.Seance;
+import sn.thiane.ent.mefpai.domain.enumeration.Jour;
 import sn.thiane.ent.mefpai.repository.SeanceRepository;
 
 /**
@@ -32,6 +33,9 @@ import sn.thiane.ent.mefpai.repository.SeanceRepository;
 @AutoConfigureMockMvc
 @WithMockUser
 class SeanceResourceIT {
+
+    private static final Jour DEFAULT_JOUR_SEANCE = Jour.Lundi;
+    private static final Jour UPDATED_JOUR_SEANCE = Jour.Mardi;
 
     private static final LocalDate DEFAULT_DATE_SEANCE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE_SEANCE = LocalDate.now(ZoneId.systemDefault());
@@ -66,7 +70,11 @@ class SeanceResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Seance createEntity(EntityManager em) {
-        Seance seance = new Seance().dateSeance(DEFAULT_DATE_SEANCE).dateDebut(DEFAULT_DATE_DEBUT).dateFin(DEFAULT_DATE_FIN);
+        Seance seance = new Seance()
+            .jourSeance(DEFAULT_JOUR_SEANCE)
+            .dateSeance(DEFAULT_DATE_SEANCE)
+            .dateDebut(DEFAULT_DATE_DEBUT)
+            .dateFin(DEFAULT_DATE_FIN);
         return seance;
     }
 
@@ -77,7 +85,11 @@ class SeanceResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Seance createUpdatedEntity(EntityManager em) {
-        Seance seance = new Seance().dateSeance(UPDATED_DATE_SEANCE).dateDebut(UPDATED_DATE_DEBUT).dateFin(UPDATED_DATE_FIN);
+        Seance seance = new Seance()
+            .jourSeance(UPDATED_JOUR_SEANCE)
+            .dateSeance(UPDATED_DATE_SEANCE)
+            .dateDebut(UPDATED_DATE_DEBUT)
+            .dateFin(UPDATED_DATE_FIN);
         return seance;
     }
 
@@ -99,6 +111,7 @@ class SeanceResourceIT {
         List<Seance> seanceList = seanceRepository.findAll();
         assertThat(seanceList).hasSize(databaseSizeBeforeCreate + 1);
         Seance testSeance = seanceList.get(seanceList.size() - 1);
+        assertThat(testSeance.getJourSeance()).isEqualTo(DEFAULT_JOUR_SEANCE);
         assertThat(testSeance.getDateSeance()).isEqualTo(DEFAULT_DATE_SEANCE);
         assertThat(testSeance.getDateDebut()).isEqualTo(DEFAULT_DATE_DEBUT);
         assertThat(testSeance.getDateFin()).isEqualTo(DEFAULT_DATE_FIN);
@@ -120,6 +133,23 @@ class SeanceResourceIT {
         // Validate the Seance in the database
         List<Seance> seanceList = seanceRepository.findAll();
         assertThat(seanceList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void checkJourSeanceIsRequired() throws Exception {
+        int databaseSizeBeforeTest = seanceRepository.findAll().size();
+        // set the field null
+        seance.setJourSeance(null);
+
+        // Create the Seance, which fails.
+
+        restSeanceMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(seance)))
+            .andExpect(status().isBadRequest());
+
+        List<Seance> seanceList = seanceRepository.findAll();
+        assertThat(seanceList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -185,6 +215,7 @@ class SeanceResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(seance.getId().intValue())))
+            .andExpect(jsonPath("$.[*].jourSeance").value(hasItem(DEFAULT_JOUR_SEANCE.toString())))
             .andExpect(jsonPath("$.[*].dateSeance").value(hasItem(DEFAULT_DATE_SEANCE.toString())))
             .andExpect(jsonPath("$.[*].dateDebut").value(hasItem(DEFAULT_DATE_DEBUT.toString())))
             .andExpect(jsonPath("$.[*].dateFin").value(hasItem(DEFAULT_DATE_FIN.toString())));
@@ -202,6 +233,7 @@ class SeanceResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(seance.getId().intValue()))
+            .andExpect(jsonPath("$.jourSeance").value(DEFAULT_JOUR_SEANCE.toString()))
             .andExpect(jsonPath("$.dateSeance").value(DEFAULT_DATE_SEANCE.toString()))
             .andExpect(jsonPath("$.dateDebut").value(DEFAULT_DATE_DEBUT.toString()))
             .andExpect(jsonPath("$.dateFin").value(DEFAULT_DATE_FIN.toString()));
@@ -226,7 +258,11 @@ class SeanceResourceIT {
         Seance updatedSeance = seanceRepository.findById(seance.getId()).get();
         // Disconnect from session so that the updates on updatedSeance are not directly saved in db
         em.detach(updatedSeance);
-        updatedSeance.dateSeance(UPDATED_DATE_SEANCE).dateDebut(UPDATED_DATE_DEBUT).dateFin(UPDATED_DATE_FIN);
+        updatedSeance
+            .jourSeance(UPDATED_JOUR_SEANCE)
+            .dateSeance(UPDATED_DATE_SEANCE)
+            .dateDebut(UPDATED_DATE_DEBUT)
+            .dateFin(UPDATED_DATE_FIN);
 
         restSeanceMockMvc
             .perform(
@@ -240,6 +276,7 @@ class SeanceResourceIT {
         List<Seance> seanceList = seanceRepository.findAll();
         assertThat(seanceList).hasSize(databaseSizeBeforeUpdate);
         Seance testSeance = seanceList.get(seanceList.size() - 1);
+        assertThat(testSeance.getJourSeance()).isEqualTo(UPDATED_JOUR_SEANCE);
         assertThat(testSeance.getDateSeance()).isEqualTo(UPDATED_DATE_SEANCE);
         assertThat(testSeance.getDateDebut()).isEqualTo(UPDATED_DATE_DEBUT);
         assertThat(testSeance.getDateFin()).isEqualTo(UPDATED_DATE_FIN);
@@ -313,7 +350,7 @@ class SeanceResourceIT {
         Seance partialUpdatedSeance = new Seance();
         partialUpdatedSeance.setId(seance.getId());
 
-        partialUpdatedSeance.dateDebut(UPDATED_DATE_DEBUT).dateFin(UPDATED_DATE_FIN);
+        partialUpdatedSeance.dateSeance(UPDATED_DATE_SEANCE).dateDebut(UPDATED_DATE_DEBUT).dateFin(UPDATED_DATE_FIN);
 
         restSeanceMockMvc
             .perform(
@@ -327,7 +364,8 @@ class SeanceResourceIT {
         List<Seance> seanceList = seanceRepository.findAll();
         assertThat(seanceList).hasSize(databaseSizeBeforeUpdate);
         Seance testSeance = seanceList.get(seanceList.size() - 1);
-        assertThat(testSeance.getDateSeance()).isEqualTo(DEFAULT_DATE_SEANCE);
+        assertThat(testSeance.getJourSeance()).isEqualTo(DEFAULT_JOUR_SEANCE);
+        assertThat(testSeance.getDateSeance()).isEqualTo(UPDATED_DATE_SEANCE);
         assertThat(testSeance.getDateDebut()).isEqualTo(UPDATED_DATE_DEBUT);
         assertThat(testSeance.getDateFin()).isEqualTo(UPDATED_DATE_FIN);
     }
@@ -344,7 +382,11 @@ class SeanceResourceIT {
         Seance partialUpdatedSeance = new Seance();
         partialUpdatedSeance.setId(seance.getId());
 
-        partialUpdatedSeance.dateSeance(UPDATED_DATE_SEANCE).dateDebut(UPDATED_DATE_DEBUT).dateFin(UPDATED_DATE_FIN);
+        partialUpdatedSeance
+            .jourSeance(UPDATED_JOUR_SEANCE)
+            .dateSeance(UPDATED_DATE_SEANCE)
+            .dateDebut(UPDATED_DATE_DEBUT)
+            .dateFin(UPDATED_DATE_FIN);
 
         restSeanceMockMvc
             .perform(
@@ -358,6 +400,7 @@ class SeanceResourceIT {
         List<Seance> seanceList = seanceRepository.findAll();
         assertThat(seanceList).hasSize(databaseSizeBeforeUpdate);
         Seance testSeance = seanceList.get(seanceList.size() - 1);
+        assertThat(testSeance.getJourSeance()).isEqualTo(UPDATED_JOUR_SEANCE);
         assertThat(testSeance.getDateSeance()).isEqualTo(UPDATED_DATE_SEANCE);
         assertThat(testSeance.getDateDebut()).isEqualTo(UPDATED_DATE_DEBUT);
         assertThat(testSeance.getDateFin()).isEqualTo(UPDATED_DATE_FIN);

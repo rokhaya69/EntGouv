@@ -10,6 +10,8 @@ import { EtablissementService } from '../service/etablissement.service';
 import { IEtablissement, Etablissement } from '../etablissement.model';
 import { IPersoAdmin } from 'app/entities/perso-admin/perso-admin.model';
 import { PersoAdminService } from 'app/entities/perso-admin/service/perso-admin.service';
+import { ICommune } from 'app/entities/commune/commune.model';
+import { CommuneService } from 'app/entities/commune/service/commune.service';
 import { IRessource } from 'app/entities/ressource/ressource.model';
 import { RessourceService } from 'app/entities/ressource/service/ressource.service';
 import { IInspection } from 'app/entities/inspection/inspection.model';
@@ -23,6 +25,7 @@ describe('Etablissement Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let etablissementService: EtablissementService;
   let persoAdminService: PersoAdminService;
+  let communeService: CommuneService;
   let ressourceService: RessourceService;
   let inspectionService: InspectionService;
 
@@ -47,6 +50,7 @@ describe('Etablissement Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     etablissementService = TestBed.inject(EtablissementService);
     persoAdminService = TestBed.inject(PersoAdminService);
+    communeService = TestBed.inject(CommuneService);
     ressourceService = TestBed.inject(RessourceService);
     inspectionService = TestBed.inject(InspectionService);
 
@@ -70,6 +74,24 @@ describe('Etablissement Management Update Component', () => {
       expect(persoAdminService.query).toHaveBeenCalled();
       expect(persoAdminService.addPersoAdminToCollectionIfMissing).toHaveBeenCalledWith(persoAdminCollection, persoAdmin);
       expect(comp.persoAdminsCollection).toEqual(expectedCollection);
+    });
+
+    it('Should call commune query and add missing value', () => {
+      const etablissement: IEtablissement = { id: 456 };
+      const commune: ICommune = { id: 41122 };
+      etablissement.commune = commune;
+
+      const communeCollection: ICommune[] = [{ id: 46121 }];
+      jest.spyOn(communeService, 'query').mockReturnValue(of(new HttpResponse({ body: communeCollection })));
+      const expectedCollection: ICommune[] = [commune, ...communeCollection];
+      jest.spyOn(communeService, 'addCommuneToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ etablissement });
+      comp.ngOnInit();
+
+      expect(communeService.query).toHaveBeenCalled();
+      expect(communeService.addCommuneToCollectionIfMissing).toHaveBeenCalledWith(communeCollection, commune);
+      expect(comp.communesCollection).toEqual(expectedCollection);
     });
 
     it('Should call Ressource query and add missing value', () => {
@@ -114,6 +136,8 @@ describe('Etablissement Management Update Component', () => {
       const etablissement: IEtablissement = { id: 456 };
       const persoAdmin: IPersoAdmin = { id: 74645 };
       etablissement.persoAdmin = persoAdmin;
+      const commune: ICommune = { id: 16135 };
+      etablissement.commune = commune;
       const ressources: IRessource = { id: 66533 };
       etablissement.ressources = [ressources];
       const inspection: IInspection = { id: 53283 };
@@ -124,6 +148,7 @@ describe('Etablissement Management Update Component', () => {
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(etablissement));
       expect(comp.persoAdminsCollection).toContain(persoAdmin);
+      expect(comp.communesCollection).toContain(commune);
       expect(comp.ressourcesSharedCollection).toContain(ressources);
       expect(comp.inspectionsSharedCollection).toContain(inspection);
     });
@@ -198,6 +223,14 @@ describe('Etablissement Management Update Component', () => {
       it('Should return tracked PersoAdmin primary key', () => {
         const entity = { id: 123 };
         const trackResult = comp.trackPersoAdminById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
+    describe('trackCommuneById', () => {
+      it('Should return tracked Commune primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackCommuneById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

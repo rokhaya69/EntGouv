@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import sn.thiane.ent.mefpai.domain.enumeration.Jour;
 
 /**
  * A Seance.
@@ -27,6 +28,11 @@ public class Seance implements Serializable {
     private Long id;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "jour_seance", nullable = false)
+    private Jour jourSeance;
+
+    @NotNull
     @Column(name = "date_seance", nullable = false)
     private LocalDate dateSeance;
 
@@ -37,10 +43,6 @@ public class Seance implements Serializable {
     @NotNull
     @Column(name = "date_fin", nullable = false)
     private Instant dateFin;
-
-    @JsonIgnoreProperties(value = { "seance" }, allowSetters = true)
-    @OneToOne(mappedBy = "seance")
-    private Contenu contenu;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "syllabus", "seances", "ressources", "matiere", "classe", "professeur" }, allowSetters = true)
@@ -72,6 +74,19 @@ public class Seance implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Jour getJourSeance() {
+        return this.jourSeance;
+    }
+
+    public Seance jourSeance(Jour jourSeance) {
+        this.setJourSeance(jourSeance);
+        return this;
+    }
+
+    public void setJourSeance(Jour jourSeance) {
+        this.jourSeance = jourSeance;
     }
 
     public LocalDate getDateSeance() {
@@ -111,25 +126,6 @@ public class Seance implements Serializable {
 
     public void setDateFin(Instant dateFin) {
         this.dateFin = dateFin;
-    }
-
-    public Contenu getContenu() {
-        return this.contenu;
-    }
-
-    public void setContenu(Contenu contenu) {
-        if (this.contenu != null) {
-            this.contenu.setSeance(null);
-        }
-        if (contenu != null) {
-            contenu.setSeance(this);
-        }
-        this.contenu = contenu;
-    }
-
-    public Seance contenu(Contenu contenu) {
-        this.setContenu(contenu);
-        return this;
     }
 
     public Cours getCours() {
@@ -226,6 +222,7 @@ public class Seance implements Serializable {
     public String toString() {
         return "Seance{" +
             "id=" + getId() +
+            ", jourSeance='" + getJourSeance() + "'" +
             ", dateSeance='" + getDateSeance() + "'" +
             ", dateDebut='" + getDateDebut() + "'" +
             ", dateFin='" + getDateFin() + "'" +

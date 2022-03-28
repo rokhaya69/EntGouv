@@ -5,8 +5,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -133,6 +131,9 @@ public class SeanceResource {
         Optional<Seance> result = seanceRepository
             .findById(seance.getId())
             .map(existingSeance -> {
+                if (seance.getJourSeance() != null) {
+                    existingSeance.setJourSeance(seance.getJourSeance());
+                }
                 if (seance.getDateSeance() != null) {
                     existingSeance.setDateSeance(seance.getDateSeance());
                 }
@@ -158,25 +159,13 @@ public class SeanceResource {
      *
      * @param pageable the pagination information.
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
-     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of seances in body.
      */
     @GetMapping("/seances")
     public ResponseEntity<List<Seance>> getAllSeances(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        @RequestParam(required = false) String filter,
         @RequestParam(required = false, defaultValue = "true") boolean eagerload
     ) {
-        if ("contenu-is-null".equals(filter)) {
-            log.debug("REST request to get all Seances where contenu is null");
-            return new ResponseEntity<>(
-                StreamSupport
-                    .stream(seanceRepository.findAll().spliterator(), false)
-                    .filter(seance -> seance.getContenu() == null)
-                    .collect(Collectors.toList()),
-                HttpStatus.OK
-            );
-        }
         log.debug("REST request to get a page of Seances");
         Page<Seance> page;
         if (eagerload) {

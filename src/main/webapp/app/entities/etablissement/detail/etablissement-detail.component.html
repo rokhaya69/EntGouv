@@ -22,10 +22,24 @@
         <dd>
           <span jhiTranslate="{{ 'entMefpaiApp.TypeEtab.' + etablissement.typeEtab }}">{{ etablissement.typeEtab }}</span>
         </dd>
+        <dt><span jhiTranslate="entMefpaiApp.etablissement.email">Email</span></dt>
+        <dd>
+          <span>{{ etablissement.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.etablissement.telephone">Telephone</span></dt>
+        <dd>
+          <span>{{ etablissement.telephone }}</span>
+        </dd>
         <dt><span jhiTranslate="entMefpaiApp.etablissement.persoAdmin">Perso Admin</span></dt>
         <dd>
           <div *ngIf="etablissement.persoAdmin">
             <a [routerLink]="['/perso-admin', etablissement.persoAdmin?.id, 'view']">{{ etablissement.persoAdmin?.nom }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.etablissement.commune">Commune</span></dt>
+        <dd>
+          <div *ngIf="etablissement.commune">
+            <a [routerLink]="['/commune', etablissement.commune?.id, 'view']">{{ etablissement.commune?.nomCom }}</a>
           </div>
         </dd>
         <dt><span jhiTranslate="entMefpaiApp.etablissement.ressource">Ressource</span></dt>

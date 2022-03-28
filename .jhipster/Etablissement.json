@@ -15,6 +15,23 @@
       "fieldType": "TypeEtab",
       "fieldValidateRules": ["required"],
       "fieldValues": "LyceeTech,CentreFP"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"],
+      "options": {
+        "email": true,
+        "unique": true
+      }
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"],
+      "options": {
+        "unique": true
+      }
     }
   ],
   "fluentMethods": true,
@@ -29,6 +46,14 @@
       "otherEntityRelationshipName": "etablissement",
       "ownerSide": true,
       "relationshipName": "persoAdmin",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "nomCom",
+      "otherEntityName": "commune",
+      "otherEntityRelationshipName": "etablissement",
+      "ownerSide": true,
+      "relationshipName": "commune",
       "relationshipType": "one-to-one"
     },
     {

@@ -28,14 +28,14 @@ public class Cours implements Serializable {
     @Column(name = "libelle_cours", nullable = false, unique = true)
     private String libelleCours;
 
-    @JsonIgnoreProperties(value = { "cours", "programme" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "programme" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
     private Syllabus syllabus;
 
     @OneToMany(mappedBy = "cours")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "contenu", "cours", "salle", "groupe", "absences" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "cours", "salle", "groupe", "absences" }, allowSetters = true)
     private Set<Seance> seances = new HashSet<>();
 
     @OneToMany(mappedBy = "cours")

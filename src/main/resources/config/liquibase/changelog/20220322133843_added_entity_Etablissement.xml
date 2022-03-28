@@ -20,8 +20,17 @@
             <column name="type_etab" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="telephone" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
             <column name="perso_admin_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_etablissement__perso_admin_id" />
+            </column>
+            <column name="commune_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_etablissement__commune_id" />
             </column>
             <column name="inspection_id" type="bigint">
                 <constraints nullable="true" />
@@ -63,6 +72,8 @@
             <column name="id" type="numeric"/>
             <column name="nom_etab" type="string"/>
             <column name="type_etab" type="string"/>
+            <column name="email" type="string"/>
+            <column name="telephone" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

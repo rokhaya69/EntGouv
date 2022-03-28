@@ -9,6 +9,8 @@ import { IEtablissement, Etablissement } from '../etablissement.model';
 import { EtablissementService } from '../service/etablissement.service';
 import { IPersoAdmin } from 'app/entities/perso-admin/perso-admin.model';
 import { PersoAdminService } from 'app/entities/perso-admin/service/perso-admin.service';
+import { ICommune } from 'app/entities/commune/commune.model';
+import { CommuneService } from 'app/entities/commune/service/commune.service';
 import { IRessource } from 'app/entities/ressource/ressource.model';
 import { RessourceService } from 'app/entities/ressource/service/ressource.service';
 import { IInspection } from 'app/entities/inspection/inspection.model';
@@ -24,6 +26,7 @@ export class EtablissementUpdateComponent implements OnInit {
   typeEtabValues = Object.keys(TypeEtab);
 
   persoAdminsCollection: IPersoAdmin[] = [];
+  communesCollection: ICommune[] = [];
   ressourcesSharedCollection: IRessource[] = [];
   inspectionsSharedCollection: IInspection[] = [];
 
@@ -31,7 +34,10 @@ export class EtablissementUpdateComponent implements OnInit {
     id: [],
     nomEtab: [null, [Validators.required]],
     typeEtab: [null, [Validators.required]],
+    email: [null, [Validators.required]],
+    telephone: [null, [Validators.required]],
     persoAdmin: [],
+    commune: [],
     ressources: [],
     inspection: [],
   });
@@ -39,6 +45,7 @@ export class EtablissementUpdateComponent implements OnInit {
   constructor(
     protected etablissementService: EtablissementService,
     protected persoAdminService: PersoAdminService,
+    protected communeService: CommuneService,
     protected ressourceService: RessourceService,
     protected inspectionService: InspectionService,
     protected activatedRoute: ActivatedRoute,
@@ -68,6 +75,10 @@ export class EtablissementUpdateComponent implements OnInit {
   }
 
   trackPersoAdminById(index: number, item: IPersoAdmin): number {
+    return item.id!;
+  }
+
+  trackCommuneById(index: number, item: ICommune): number {
     return item.id!;
   }
 
@@ -114,7 +125,10 @@ export class EtablissementUpdateComponent implements OnInit {
       id: etablissement.id,
       nomEtab: etablissement.nomEtab,
       typeEtab: etablissement.typeEtab,
+      email: etablissement.email,
+      telephone: etablissement.telephone,
       persoAdmin: etablissement.persoAdmin,
+      commune: etablissement.commune,
       ressources: etablissement.ressources,
       inspection: etablissement.inspection,
     });
@@ -123,6 +137,7 @@ export class EtablissementUpdateComponent implements OnInit {
       this.persoAdminsCollection,
       etablissement.persoAdmin
     );
+    this.communesCollection = this.communeService.addCommuneToCollectionIfMissing(this.communesCollection, etablissement.commune);
     this.ressourcesSharedCollection = this.ressourceService.addRessourceToCollectionIfMissing(
       this.ressourcesSharedCollection,
       ...(etablissement.ressources ?? [])
@@ -143,6 +158,14 @@ export class EtablissementUpdateComponent implements OnInit {
         )
       )
       .subscribe((persoAdmins: IPersoAdmin[]) => (this.persoAdminsCollection = persoAdmins));
+
+    this.communeService
+      .query({ filter: 'etablissement-is-null' })
+      .pipe(map((res: HttpResponse<ICommune[]>) => res.body ?? []))
+      .pipe(
+        map((communes: ICommune[]) => this.communeService.addCommuneToCollectionIfMissing(communes, this.editForm.get('commune')!.value))
+      )
+      .subscribe((communes: ICommune[]) => (this.communesCollection = communes));
 
     this.ressourceService
       .query()
@@ -171,7 +194,10 @@ export class EtablissementUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       nomEtab: this.editForm.get(['nomEtab'])!.value,
       typeEtab: this.editForm.get(['typeEtab'])!.value,
+      email: this.editForm.get(['email'])!.value,
+      telephone: this.editForm.get(['telephone'])!.value,
       persoAdmin: this.editForm.get(['persoAdmin'])!.value,
+      commune: this.editForm.get(['commune'])!.value,
       ressources: this.editForm.get(['ressources'])!.value,
       inspection: this.editForm.get(['inspection'])!.value,
     };

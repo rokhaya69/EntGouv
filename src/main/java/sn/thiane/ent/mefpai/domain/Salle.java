@@ -30,7 +30,7 @@ public class Salle implements Serializable {
 
     @OneToMany(mappedBy = "salle")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "contenu", "cours", "salle", "groupe", "absences" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "cours", "salle", "groupe", "absences" }, allowSetters = true)
     private Set<Seance> seances = new HashSet<>();
 
     @OneToMany(mappedBy = "salle")

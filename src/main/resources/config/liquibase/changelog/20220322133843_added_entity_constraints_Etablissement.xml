@@ -14,6 +14,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="perso_admin"/>
 
+        <addForeignKeyConstraint baseColumnNames="commune_id"
+                                 baseTableName="etablissement"
+                                 constraintName="fk_etablissement__commune_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="commune"/>
+
         <addForeignKeyConstraint baseColumnNames="etablissement_id"
                                  baseTableName="rel_etablissement__ressource"
                                  constraintName="fk_rel_etablissement__ressource__etablissement_id"

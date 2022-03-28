@@ -28,6 +28,8 @@ export class InspectionUpdateComponent implements OnInit {
     id: [],
     nomInspec: [null, [Validators.required]],
     typeInspec: [null, [Validators.required]],
+    email: [null, [Validators.required]],
+    telephone: [null, [Validators.required]],
     commune: [],
     persoAdmin: [],
   });
@@ -94,6 +96,8 @@ export class InspectionUpdateComponent implements OnInit {
       id: inspection.id,
       nomInspec: inspection.nomInspec,
       typeInspec: inspection.typeInspec,
+      email: inspection.email,
+      telephone: inspection.telephone,
       commune: inspection.commune,
       persoAdmin: inspection.persoAdmin,
     });
@@ -131,6 +135,8 @@ export class InspectionUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       nomInspec: this.editForm.get(['nomInspec'])!.value,
       typeInspec: this.editForm.get(['typeInspec'])!.value,
+      email: this.editForm.get(['email'])!.value,
+      telephone: this.editForm.get(['telephone'])!.value,
       commune: this.editForm.get(['commune'])!.value,
       persoAdmin: this.editForm.get(['persoAdmin'])!.value,
     };

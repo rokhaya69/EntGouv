@@ -44,7 +44,7 @@
               [ngValue]="syllabusOption.id === editForm.get('syllabus')!.value?.id ? editForm.get('syllabus')!.value : syllabusOption"
               *ngFor="let syllabusOption of syllabiCollection; trackBy: trackSyllabusById"
             >
-              {{ syllabusOption.id }}
+              {{ syllabusOption.syllabus }}
             </option>
           </select>
         </div>

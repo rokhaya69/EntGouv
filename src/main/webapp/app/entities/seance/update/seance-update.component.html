@@ -14,6 +14,23 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="entMefpaiApp.seance.jourSeance" for="field_jourSeance">Jour Seance</label>
+          <select class="form-control" name="jourSeance" formControlName="jourSeance" id="field_jourSeance" data-cy="jourSeance">
+            <option [ngValue]="null">{{ 'entMefpaiApp.Jour.null' | translate }}</option>
+            <option *ngFor="let jour of jourValues" [value]="jour">{{ 'entMefpaiApp.Jour.' + jour | translate }}</option>
+          </select>
+          <div *ngIf="editForm.get('jourSeance')!.invalid && (editForm.get('jourSeance')!.dirty || editForm.get('jourSeance')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('jourSeance')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="entMefpaiApp.seance.dateSeance" for="field_dateSeance">Date Seance</label>
           <div class="input-group">
             <input

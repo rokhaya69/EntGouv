@@ -14,6 +14,9 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="jour_seance" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
             <column name="date_seance" type="date">
                 <constraints nullable="false" />
             </column>
@@ -55,6 +58,7 @@
                   tableName="seance"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
+            <column name="jour_seance" type="string"/>
             <column name="date_seance" type="date"/>
             <column name="date_debut" type="date"/>
             <column name="date_fin" type="date"/>

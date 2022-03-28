@@ -15,6 +15,23 @@
       "fieldType": "TypeInspec",
       "fieldValidateRules": ["required"],
       "fieldValues": "IA,IEF"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"],
+      "options": {
+        "email": true,
+        "unique": true
+      }
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"],
+      "options": {
+        "unique": true
+      }
     }
   ],
   "fluentMethods": true,

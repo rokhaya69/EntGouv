@@ -24,6 +24,8 @@ describe('Inspection Service', () => {
       id: 0,
       nomInspec: 'AAAAAAA',
       typeInspec: TypeInspec.IA,
+      email: 'AAAAAAA',
+      telephone: 'AAAAAAA',
     };
   });
 
@@ -61,6 +63,8 @@ describe('Inspection Service', () => {
           id: 1,
           nomInspec: 'BBBBBB',
           typeInspec: 'BBBBBB',
+          email: 'BBBBBB',
+          telephone: 'BBBBBB',
         },
         elemDefault
       );
@@ -75,7 +79,13 @@ describe('Inspection Service', () => {
     });
 
     it('should partial update a Inspection', () => {
-      const patchObject = Object.assign({}, new Inspection());
+      const patchObject = Object.assign(
+        {
+          email: 'BBBBBB',
+          telephone: 'BBBBBB',
+        },
+        new Inspection()
+      );
 
       const returnedFromService = Object.assign(patchObject, elemDefault);
 
@@ -94,6 +104,8 @@ describe('Inspection Service', () => {
           id: 1,
           nomInspec: 'BBBBBB',
           typeInspec: 'BBBBBB',
+          email: 'BBBBBB',
+          telephone: 'BBBBBB',
         },
         elemDefault
       );
@@ -145,7 +157,7 @@ describe('Inspection Service', () => {
       });
 
       it('should add only unique Inspection to an array', () => {
-        const inspectionArray: IInspection[] = [{ id: 123 }, { id: 456 }, { id: 57985 }];
+        const inspectionArray: IInspection[] = [{ id: 123 }, { id: 456 }, { id: 69074 }];
         const inspectionCollection: IInspection[] = [{ id: 123 }];
         expectedResult = service.addInspectionToCollectionIfMissing(inspectionCollection, ...inspectionArray);
         expect(expectedResult).toHaveLength(3);

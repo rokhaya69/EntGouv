@@ -36,6 +36,12 @@ class InspectionResourceIT {
     private static final TypeInspec DEFAULT_TYPE_INSPEC = TypeInspec.IA;
     private static final TypeInspec UPDATED_TYPE_INSPEC = TypeInspec.IEF;
 
+    private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
+    private static final String UPDATED_EMAIL = "BBBBBBBBBB";
+
+    private static final String DEFAULT_TELEPHONE = "AAAAAAAAAA";
+    private static final String UPDATED_TELEPHONE = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/inspections";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -60,7 +66,11 @@ class InspectionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Inspection createEntity(EntityManager em) {
-        Inspection inspection = new Inspection().nomInspec(DEFAULT_NOM_INSPEC).typeInspec(DEFAULT_TYPE_INSPEC);
+        Inspection inspection = new Inspection()
+            .nomInspec(DEFAULT_NOM_INSPEC)
+            .typeInspec(DEFAULT_TYPE_INSPEC)
+            .email(DEFAULT_EMAIL)
+            .telephone(DEFAULT_TELEPHONE);
         return inspection;
     }
 
@@ -71,7 +81,11 @@ class InspectionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Inspection createUpdatedEntity(EntityManager em) {
-        Inspection inspection = new Inspection().nomInspec(UPDATED_NOM_INSPEC).typeInspec(UPDATED_TYPE_INSPEC);
+        Inspection inspection = new Inspection()
+            .nomInspec(UPDATED_NOM_INSPEC)
+            .typeInspec(UPDATED_TYPE_INSPEC)
+            .email(UPDATED_EMAIL)
+            .telephone(UPDATED_TELEPHONE);
         return inspection;
     }
 
@@ -95,6 +109,8 @@ class InspectionResourceIT {
         Inspection testInspection = inspectionList.get(inspectionList.size() - 1);
         assertThat(testInspection.getNomInspec()).isEqualTo(DEFAULT_NOM_INSPEC);
         assertThat(testInspection.getTypeInspec()).isEqualTo(DEFAULT_TYPE_INSPEC);
+        assertThat(testInspection.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testInspection.getTelephone()).isEqualTo(DEFAULT_TELEPHONE);
     }
 
     @Test
@@ -151,6 +167,40 @@ class InspectionResourceIT {
 
     @Test
     @Transactional
+    void checkEmailIsRequired() throws Exception {
+        int databaseSizeBeforeTest = inspectionRepository.findAll().size();
+        // set the field null
+        inspection.setEmail(null);
+
+        // Create the Inspection, which fails.
+
+        restInspectionMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(inspection)))
+            .andExpect(status().isBadRequest());
+
+        List<Inspection> inspectionList = inspectionRepository.findAll();
+        assertThat(inspectionList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkTelephoneIsRequired() throws Exception {
+        int databaseSizeBeforeTest = inspectionRepository.findAll().size();
+        // set the field null
+        inspection.setTelephone(null);
+
+        // Create the Inspection, which fails.
+
+        restInspectionMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(inspection)))
+            .andExpect(status().isBadRequest());
+
+        List<Inspection> inspectionList = inspectionRepository.findAll();
+        assertThat(inspectionList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllInspections() throws Exception {
         // Initialize the database
         inspectionRepository.saveAndFlush(inspection);
@@ -162,7 +212,9 @@ class InspectionResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(inspection.getId().intValue())))
             .andExpect(jsonPath("$.[*].nomInspec").value(hasItem(DEFAULT_NOM_INSPEC)))
-            .andExpect(jsonPath("$.[*].typeInspec").value(hasItem(DEFAULT_TYPE_INSPEC.toString())));
+            .andExpect(jsonPath("$.[*].typeInspec").value(hasItem(DEFAULT_TYPE_INSPEC.toString())))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
+            .andExpect(jsonPath("$.[*].telephone").value(hasItem(DEFAULT_TELEPHONE)));
     }
 
     @Test
@@ -178,7 +230,9 @@ class InspectionResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(inspection.getId().intValue()))
             .andExpect(jsonPath("$.nomInspec").value(DEFAULT_NOM_INSPEC))
-            .andExpect(jsonPath("$.typeInspec").value(DEFAULT_TYPE_INSPEC.toString()));
+            .andExpect(jsonPath("$.typeInspec").value(DEFAULT_TYPE_INSPEC.toString()))
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
+            .andExpect(jsonPath("$.telephone").value(DEFAULT_TELEPHONE));
     }
 
     @Test
@@ -200,7 +254,7 @@ class InspectionResourceIT {
         Inspection updatedInspection = inspectionRepository.findById(inspection.getId()).get();
         // Disconnect from session so that the updates on updatedInspection are not directly saved in db
         em.detach(updatedInspection);
-        updatedInspection.nomInspec(UPDATED_NOM_INSPEC).typeInspec(UPDATED_TYPE_INSPEC);
+        updatedInspection.nomInspec(UPDATED_NOM_INSPEC).typeInspec(UPDATED_TYPE_INSPEC).email(UPDATED_EMAIL).telephone(UPDATED_TELEPHONE);
 
         restInspectionMockMvc
             .perform(
@@ -216,6 +270,8 @@ class InspectionResourceIT {
         Inspection testInspection = inspectionList.get(inspectionList.size() - 1);
         assertThat(testInspection.getNomInspec()).isEqualTo(UPDATED_NOM_INSPEC);
         assertThat(testInspection.getTypeInspec()).isEqualTo(UPDATED_TYPE_INSPEC);
+        assertThat(testInspection.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testInspection.getTelephone()).isEqualTo(UPDATED_TELEPHONE);
     }
 
     @Test
@@ -286,7 +342,7 @@ class InspectionResourceIT {
         Inspection partialUpdatedInspection = new Inspection();
         partialUpdatedInspection.setId(inspection.getId());
 
-        partialUpdatedInspection.nomInspec(UPDATED_NOM_INSPEC);
+        partialUpdatedInspection.nomInspec(UPDATED_NOM_INSPEC).email(UPDATED_EMAIL).telephone(UPDATED_TELEPHONE);
 
         restInspectionMockMvc
             .perform(
@@ -302,6 +358,8 @@ class InspectionResourceIT {
         Inspection testInspection = inspectionList.get(inspectionList.size() - 1);
         assertThat(testInspection.getNomInspec()).isEqualTo(UPDATED_NOM_INSPEC);
         assertThat(testInspection.getTypeInspec()).isEqualTo(DEFAULT_TYPE_INSPEC);
+        assertThat(testInspection.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testInspection.getTelephone()).isEqualTo(UPDATED_TELEPHONE);
     }
 
     @Test
@@ -316,7 +374,11 @@ class InspectionResourceIT {
         Inspection partialUpdatedInspection = new Inspection();
         partialUpdatedInspection.setId(inspection.getId());
 
-        partialUpdatedInspection.nomInspec(UPDATED_NOM_INSPEC).typeInspec(UPDATED_TYPE_INSPEC);
+        partialUpdatedInspection
+            .nomInspec(UPDATED_NOM_INSPEC)
+            .typeInspec(UPDATED_TYPE_INSPEC)
+            .email(UPDATED_EMAIL)
+            .telephone(UPDATED_TELEPHONE);
 
         restInspectionMockMvc
             .perform(
@@ -332,6 +394,8 @@ class InspectionResourceIT {
         Inspection testInspection = inspectionList.get(inspectionList.size() - 1);
         assertThat(testInspection.getNomInspec()).isEqualTo(UPDATED_NOM_INSPEC);
         assertThat(testInspection.getTypeInspec()).isEqualTo(UPDATED_TYPE_INSPEC);
+        assertThat(testInspection.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testInspection.getTelephone()).isEqualTo(UPDATED_TELEPHONE);
     }
 
     @Test

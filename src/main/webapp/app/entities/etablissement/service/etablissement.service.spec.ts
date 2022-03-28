@@ -24,6 +24,8 @@ describe('Etablissement Service', () => {
       id: 0,
       nomEtab: 'AAAAAAA',
       typeEtab: TypeEtab.LyceeTech,
+      email: 'AAAAAAA',
+      telephone: 'AAAAAAA',
     };
   });
 
@@ -61,6 +63,8 @@ describe('Etablissement Service', () => {
           id: 1,
           nomEtab: 'BBBBBB',
           typeEtab: 'BBBBBB',
+          email: 'BBBBBB',
+          telephone: 'BBBBBB',
         },
         elemDefault
       );
@@ -100,6 +104,8 @@ describe('Etablissement Service', () => {
           id: 1,
           nomEtab: 'BBBBBB',
           typeEtab: 'BBBBBB',
+          email: 'BBBBBB',
+          telephone: 'BBBBBB',
         },
         elemDefault
       );
@@ -151,7 +157,7 @@ describe('Etablissement Service', () => {
       });
 
       it('should add only unique Etablissement to an array', () => {
-        const etablissementArray: IEtablissement[] = [{ id: 123 }, { id: 456 }, { id: 29978 }];
+        const etablissementArray: IEtablissement[] = [{ id: 123 }, { id: 456 }, { id: 29018 }];
         const etablissementCollection: IEtablissement[] = [{ id: 123 }];
         expectedResult = service.addEtablissementToCollectionIfMissing(etablissementCollection, ...etablissementArray);
         expect(expectedResult).toHaveLength(3);

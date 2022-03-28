@@ -60,7 +60,10 @@ public class Ressource implements Serializable {
 
     @ManyToMany(mappedBy = "ressources")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "persoAdmin", "professeurs", "filieres", "series", "ressources", "inspection" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "persoAdmin", "commune", "professeurs", "filieres", "series", "ressources", "inspection" },
+        allowSetters = true
+    )
     private Set<Etablissement> etablissements = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

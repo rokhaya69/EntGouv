@@ -21,7 +21,7 @@
         <dt><span jhiTranslate="entMefpaiApp.cours.syllabus">Syllabus</span></dt>
         <dd>
           <div *ngIf="cours.syllabus">
-            <a [routerLink]="['/syllabus', cours.syllabus?.id, 'view']">{{ cours.syllabus?.id }}</a>
+            <a [routerLink]="['/syllabus', cours.syllabus?.id, 'view']">{{ cours.syllabus?.syllabus }}</a>
           </div>
         </dd>
         <dt><span jhiTranslate="entMefpaiApp.cours.matiere">Matiere</span></dt>

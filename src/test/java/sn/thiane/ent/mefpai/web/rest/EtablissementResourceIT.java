@@ -44,6 +44,12 @@ class EtablissementResourceIT {
     private static final TypeEtab DEFAULT_TYPE_ETAB = TypeEtab.LyceeTech;
     private static final TypeEtab UPDATED_TYPE_ETAB = TypeEtab.CentreFP;
 
+    private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
+    private static final String UPDATED_EMAIL = "BBBBBBBBBB";
+
+    private static final String DEFAULT_TELEPHONE = "AAAAAAAAAA";
+    private static final String UPDATED_TELEPHONE = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/etablissements";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -71,7 +77,11 @@ class EtablissementResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Etablissement createEntity(EntityManager em) {
-        Etablissement etablissement = new Etablissement().nomEtab(DEFAULT_NOM_ETAB).typeEtab(DEFAULT_TYPE_ETAB);
+        Etablissement etablissement = new Etablissement()
+            .nomEtab(DEFAULT_NOM_ETAB)
+            .typeEtab(DEFAULT_TYPE_ETAB)
+            .email(DEFAULT_EMAIL)
+            .telephone(DEFAULT_TELEPHONE);
         return etablissement;
     }
 
@@ -82,7 +92,11 @@ class EtablissementResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Etablissement createUpdatedEntity(EntityManager em) {
-        Etablissement etablissement = new Etablissement().nomEtab(UPDATED_NOM_ETAB).typeEtab(UPDATED_TYPE_ETAB);
+        Etablissement etablissement = new Etablissement()
+            .nomEtab(UPDATED_NOM_ETAB)
+            .typeEtab(UPDATED_TYPE_ETAB)
+            .email(UPDATED_EMAIL)
+            .telephone(UPDATED_TELEPHONE);
         return etablissement;
     }
 
@@ -106,6 +120,8 @@ class EtablissementResourceIT {
         Etablissement testEtablissement = etablissementList.get(etablissementList.size() - 1);
         assertThat(testEtablissement.getNomEtab()).isEqualTo(DEFAULT_NOM_ETAB);
         assertThat(testEtablissement.getTypeEtab()).isEqualTo(DEFAULT_TYPE_ETAB);
+        assertThat(testEtablissement.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testEtablissement.getTelephone()).isEqualTo(DEFAULT_TELEPHONE);
     }
 
     @Test
@@ -162,6 +178,40 @@ class EtablissementResourceIT {
 
     @Test
     @Transactional
+    void checkEmailIsRequired() throws Exception {
+        int databaseSizeBeforeTest = etablissementRepository.findAll().size();
+        // set the field null
+        etablissement.setEmail(null);
+
+        // Create the Etablissement, which fails.
+
+        restEtablissementMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(etablissement)))
+            .andExpect(status().isBadRequest());
+
+        List<Etablissement> etablissementList = etablissementRepository.findAll();
+        assertThat(etablissementList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkTelephoneIsRequired() throws Exception {
+        int databaseSizeBeforeTest = etablissementRepository.findAll().size();
+        // set the field null
+        etablissement.setTelephone(null);
+
+        // Create the Etablissement, which fails.
+
+        restEtablissementMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(etablissement)))
+            .andExpect(status().isBadRequest());
+
+        List<Etablissement> etablissementList = etablissementRepository.findAll();
+        assertThat(etablissementList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllEtablissements() throws Exception {
         // Initialize the database
         etablissementRepository.saveAndFlush(etablissement);
@@ -173,7 +223,9 @@ class EtablissementResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(etablissement.getId().intValue())))
             .andExpect(jsonPath("$.[*].nomEtab").value(hasItem(DEFAULT_NOM_ETAB)))
-            .andExpect(jsonPath("$.[*].typeEtab").value(hasItem(DEFAULT_TYPE_ETAB.toString())));
+            .andExpect(jsonPath("$.[*].typeEtab").value(hasItem(DEFAULT_TYPE_ETAB.toString())))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
+            .andExpect(jsonPath("$.[*].telephone").value(hasItem(DEFAULT_TELEPHONE)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -207,7 +259,9 @@ class EtablissementResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(etablissement.getId().intValue()))
             .andExpect(jsonPath("$.nomEtab").value(DEFAULT_NOM_ETAB))
-            .andExpect(jsonPath("$.typeEtab").value(DEFAULT_TYPE_ETAB.toString()));
+            .andExpect(jsonPath("$.typeEtab").value(DEFAULT_TYPE_ETAB.toString()))
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
+            .andExpect(jsonPath("$.telephone").value(DEFAULT_TELEPHONE));
     }
 
     @Test
@@ -229,7 +283,7 @@ class EtablissementResourceIT {
         Etablissement updatedEtablissement = etablissementRepository.findById(etablissement.getId()).get();
         // Disconnect from session so that the updates on updatedEtablissement are not directly saved in db
         em.detach(updatedEtablissement);
-        updatedEtablissement.nomEtab(UPDATED_NOM_ETAB).typeEtab(UPDATED_TYPE_ETAB);
+        updatedEtablissement.nomEtab(UPDATED_NOM_ETAB).typeEtab(UPDATED_TYPE_ETAB).email(UPDATED_EMAIL).telephone(UPDATED_TELEPHONE);
 
         restEtablissementMockMvc
             .perform(
@@ -245,6 +299,8 @@ class EtablissementResourceIT {
         Etablissement testEtablissement = etablissementList.get(etablissementList.size() - 1);
         assertThat(testEtablissement.getNomEtab()).isEqualTo(UPDATED_NOM_ETAB);
         assertThat(testEtablissement.getTypeEtab()).isEqualTo(UPDATED_TYPE_ETAB);
+        assertThat(testEtablissement.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testEtablissement.getTelephone()).isEqualTo(UPDATED_TELEPHONE);
     }
 
     @Test
@@ -331,6 +387,8 @@ class EtablissementResourceIT {
         Etablissement testEtablissement = etablissementList.get(etablissementList.size() - 1);
         assertThat(testEtablissement.getNomEtab()).isEqualTo(DEFAULT_NOM_ETAB);
         assertThat(testEtablissement.getTypeEtab()).isEqualTo(UPDATED_TYPE_ETAB);
+        assertThat(testEtablissement.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testEtablissement.getTelephone()).isEqualTo(DEFAULT_TELEPHONE);
     }
 
     @Test
@@ -345,7 +403,7 @@ class EtablissementResourceIT {
         Etablissement partialUpdatedEtablissement = new Etablissement();
         partialUpdatedEtablissement.setId(etablissement.getId());
 
-        partialUpdatedEtablissement.nomEtab(UPDATED_NOM_ETAB).typeEtab(UPDATED_TYPE_ETAB);
+        partialUpdatedEtablissement.nomEtab(UPDATED_NOM_ETAB).typeEtab(UPDATED_TYPE_ETAB).email(UPDATED_EMAIL).telephone(UPDATED_TELEPHONE);
 
         restEtablissementMockMvc
             .perform(
@@ -361,6 +419,8 @@ class EtablissementResourceIT {
         Etablissement testEtablissement = etablissementList.get(etablissementList.size() - 1);
         assertThat(testEtablissement.getNomEtab()).isEqualTo(UPDATED_NOM_ETAB);
         assertThat(testEtablissement.getTypeEtab()).isEqualTo(UPDATED_TYPE_ETAB);
+        assertThat(testEtablissement.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testEtablissement.getTelephone()).isEqualTo(UPDATED_TELEPHONE);
     }
 
     @Test

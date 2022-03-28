@@ -45,7 +45,7 @@ public class Programme implements Serializable {
 
     @OneToMany(mappedBy = "programme")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "cours", "programme" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "programme" }, allowSetters = true)
     private Set<Syllabus> syllabi = new HashSet<>();
 
     @OneToMany(mappedBy = "programme")

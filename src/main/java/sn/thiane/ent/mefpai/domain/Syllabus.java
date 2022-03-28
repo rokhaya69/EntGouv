@@ -26,10 +26,6 @@ public class Syllabus implements Serializable {
     @Column(name = "syllabus", nullable = false)
     private String syllabus;
 
-    @JsonIgnoreProperties(value = { "syllabus", "seances", "ressources", "matiere", "classe", "professeur" }, allowSetters = true)
-    @OneToOne(mappedBy = "syllabus")
-    private Cours cours;
-
     @ManyToOne
     @JsonIgnoreProperties(value = { "filiere", "serie", "syllabi", "matieres" }, allowSetters = true)
     private Programme programme;
@@ -60,25 +56,6 @@ public class Syllabus implements Serializable {
 
     public void setSyllabus(String syllabus) {
         this.syllabus = syllabus;
-    }
-
-    public Cours getCours() {
-        return this.cours;
-    }
-
-    public void setCours(Cours cours) {
-        if (this.cours != null) {
-            this.cours.setSyllabus(null);
-        }
-        if (cours != null) {
-            cours.setSyllabus(this);
-        }
-        this.cours = cours;
-    }
-
-    public Syllabus cours(Cours cours) {
-        this.setCours(cours);
-        return this;
     }
 
     public Programme getProgramme() {

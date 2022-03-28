@@ -7,6 +7,8 @@ export interface IInspection {
   id?: number;
   nomInspec?: string;
   typeInspec?: TypeInspec;
+  email?: string;
+  telephone?: string;
   commune?: ICommune | null;
   persoAdmin?: IPersoAdmin | null;
   etablissements?: IEtablissement[] | null;
@@ -17,6 +19,8 @@ export class Inspection implements IInspection {
     public id?: number,
     public nomInspec?: string,
     public typeInspec?: TypeInspec,
+    public email?: string,
+    public telephone?: string,
     public commune?: ICommune | null,
     public persoAdmin?: IPersoAdmin | null,
     public etablissements?: IEtablissement[] | null

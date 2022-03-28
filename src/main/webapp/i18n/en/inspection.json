@@ -20,6 +20,8 @@
       "id": "ID",
       "nomInspec": "Nom Inspec",
       "typeInspec": "Type Inspec",
+      "email": "Email",
+      "telephone": "Telephone",
       "commune": "Commune",
       "persoAdmin": "Perso Admin",
       "etablissement": "Etablissement"

@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import dayjs from 'dayjs/esm';
 
 import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/config/input.constants';
+import { Jour } from 'app/entities/enumerations/jour.model';
 import { ISeance, Seance } from '../seance.model';
 
 import { SeanceService } from './seance.service';
@@ -25,6 +26,7 @@ describe('Seance Service', () => {
 
     elemDefault = {
       id: 0,
+      jourSeance: Jour.Lundi,
       dateSeance: currentDate,
       dateDebut: currentDate,
       dateFin: currentDate,
@@ -80,6 +82,7 @@ describe('Seance Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          jourSeance: 'BBBBBB',
           dateSeance: currentDate.format(DATE_FORMAT),
           dateDebut: currentDate.format(DATE_TIME_FORMAT),
           dateFin: currentDate.format(DATE_TIME_FORMAT),
@@ -106,7 +109,7 @@ describe('Seance Service', () => {
     it('should partial update a Seance', () => {
       const patchObject = Object.assign(
         {
-          dateSeance: currentDate.format(DATE_FORMAT),
+          jourSeance: 'BBBBBB',
         },
         new Seance()
       );
@@ -133,6 +136,7 @@ describe('Seance Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          jourSeance: 'BBBBBB',
           dateSeance: currentDate.format(DATE_FORMAT),
           dateDebut: currentDate.format(DATE_TIME_FORMAT),
           dateFin: currentDate.format(DATE_TIME_FORMAT),
@@ -194,7 +198,7 @@ describe('Seance Service', () => {
       });
 
       it('should add only unique Seance to an array', () => {
-        const seanceArray: ISeance[] = [{ id: 123 }, { id: 456 }, { id: 11981 }];
+        const seanceArray: ISeance[] = [{ id: 123 }, { id: 456 }, { id: 78504 }];
         const seanceCollection: ISeance[] = [{ id: 123 }];
         expectedResult = service.addSeanceToCollectionIfMissing(seanceCollection, ...seanceArray);
         expect(expectedResult).toHaveLength(3);

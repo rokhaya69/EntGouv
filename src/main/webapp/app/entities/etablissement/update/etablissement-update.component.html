@@ -51,6 +51,30 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="entMefpaiApp.etablissement.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="entMefpaiApp.etablissement.telephone" for="field_telephone">Telephone</label>
+          <input type="text" class="form-control" name="telephone" id="field_telephone" data-cy="telephone" formControlName="telephone" />
+          <div *ngIf="editForm.get('telephone')!.invalid && (editForm.get('telephone')!.dirty || editForm.get('telephone')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('telephone')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="entMefpaiApp.etablissement.persoAdmin" for="field_persoAdmin">Perso Admin</label>
           <select class="form-control" id="field_persoAdmin" data-cy="persoAdmin" name="persoAdmin" formControlName="persoAdmin">
             <option [ngValue]="null"></option>
@@ -61,6 +85,19 @@
               *ngFor="let persoAdminOption of persoAdminsCollection; trackBy: trackPersoAdminById"
             >
               {{ persoAdminOption.nom }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="entMefpaiApp.etablissement.commune" for="field_commune">Commune</label>
+          <select class="form-control" id="field_commune" data-cy="commune" name="commune" formControlName="commune">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="communeOption.id === editForm.get('commune')!.value?.id ? editForm.get('commune')!.value : communeOption"
+              *ngFor="let communeOption of communesCollection; trackBy: trackCommuneById"
+            >
+              {{ communeOption.nomCom }}
             </option>
           </select>
         </div>

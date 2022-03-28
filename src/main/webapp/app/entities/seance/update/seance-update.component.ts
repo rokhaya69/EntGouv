@@ -16,6 +16,7 @@ import { ISalle } from 'app/entities/salle/salle.model';
 import { SalleService } from 'app/entities/salle/service/salle.service';
 import { IGroupe } from 'app/entities/groupe/groupe.model';
 import { GroupeService } from 'app/entities/groupe/service/groupe.service';
+import { Jour } from 'app/entities/enumerations/jour.model';
 
 @Component({
   selector: 'jhi-seance-update',
@@ -23,6 +24,7 @@ import { GroupeService } from 'app/entities/groupe/service/groupe.service';
 })
 export class SeanceUpdateComponent implements OnInit {
   isSaving = false;
+  jourValues = Object.keys(Jour);
 
   coursSharedCollection: ICours[] = [];
   sallesSharedCollection: ISalle[] = [];
@@ -30,6 +32,7 @@ export class SeanceUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
+    jourSeance: [null, [Validators.required]],
     dateSeance: [null, [Validators.required]],
     dateDebut: [null, [Validators.required]],
     dateFin: [null, [Validators.required]],
@@ -109,6 +112,7 @@ export class SeanceUpdateComponent implements OnInit {
   protected updateForm(seance: ISeance): void {
     this.editForm.patchValue({
       id: seance.id,
+      jourSeance: seance.jourSeance,
       dateSeance: seance.dateSeance,
       dateDebut: seance.dateDebut ? seance.dateDebut.format(DATE_TIME_FORMAT) : null,
       dateFin: seance.dateFin ? seance.dateFin.format(DATE_TIME_FORMAT) : null,
@@ -146,6 +150,7 @@ export class SeanceUpdateComponent implements OnInit {
     return {
       ...new Seance(),
       id: this.editForm.get(['id'])!.value,
+      jourSeance: this.editForm.get(['jourSeance'])!.value,
       dateSeance: this.editForm.get(['dateSeance'])!.value,
       dateDebut: this.editForm.get(['dateDebut'])!.value ? dayjs(this.editForm.get(['dateDebut'])!.value, DATE_TIME_FORMAT) : undefined,
       dateFin: this.editForm.get(['dateFin'])!.value ? dayjs(this.editForm.get(['dateFin'])!.value, DATE_TIME_FORMAT) : undefined,

@@ -34,10 +34,23 @@ public class Etablissement implements Serializable {
     @Column(name = "type_etab", nullable = false)
     private TypeEtab typeEtab;
 
+    @NotNull
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @NotNull
+    @Column(name = "telephone", nullable = false)
+    private String telephone;
+
     @JsonIgnoreProperties(value = { "user", "ressources", "evaluations", "poste" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
     private PersoAdmin persoAdmin;
+
+    @JsonIgnoreProperties(value = { "departement" }, allowSetters = true)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Commune commune;
 
     @OneToMany(mappedBy = "etablissement")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -109,6 +122,32 @@ public class Etablissement implements Serializable {
         this.typeEtab = typeEtab;
     }
 
+    public String getEmail() {
+        return this.email;
+    }
+
+    public Etablissement email(String email) {
+        this.setEmail(email);
+        return this;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelephone() {
+        return this.telephone;
+    }
+
+    public Etablissement telephone(String telephone) {
+        this.setTelephone(telephone);
+        return this;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
     public PersoAdmin getPersoAdmin() {
         return this.persoAdmin;
     }
@@ -119,6 +158,19 @@ public class Etablissement implements Serializable {
 
     public Etablissement persoAdmin(PersoAdmin persoAdmin) {
         this.setPersoAdmin(persoAdmin);
+        return this;
+    }
+
+    public Commune getCommune() {
+        return this.commune;
+    }
+
+    public void setCommune(Commune commune) {
+        this.commune = commune;
+    }
+
+    public Etablissement commune(Commune commune) {
+        this.setCommune(commune);
         return this;
     }
 
@@ -279,6 +331,8 @@ public class Etablissement implements Serializable {
             "id=" + getId() +
             ", nomEtab='" + getNomEtab() + "'" +
             ", typeEtab='" + getTypeEtab() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", telephone='" + getTelephone() + "'" +
             "}";
     }
 }

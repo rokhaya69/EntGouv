@@ -6,6 +6,12 @@
   "entityTableName": "seance",
   "fields": [
     {
+      "fieldName": "jourSeance",
+      "fieldType": "Jour",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi"
+    },
+    {
       "fieldName": "dateSeance",
       "fieldType": "LocalDate",
       "fieldValidateRules": ["required"]
@@ -27,13 +33,6 @@
   "pagination": "pagination",
   "readOnly": false,
   "relationships": [
-    {
-      "otherEntityName": "contenu",
-      "otherEntityRelationshipName": "seance",
-      "ownerSide": false,
-      "relationshipName": "contenu",
-      "relationshipType": "one-to-one"
-    },
     {
       "otherEntityField": "libelleCours",
       "otherEntityName": "cours",

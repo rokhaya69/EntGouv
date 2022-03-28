@@ -39,8 +39,17 @@
           <th scope="col" jhiSortBy="typeEtab">
             <span jhiTranslate="entMefpaiApp.etablissement.typeEtab">Type Etab</span> <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="email">
+            <span jhiTranslate="entMefpaiApp.etablissement.email">Email</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="telephone">
+            <span jhiTranslate="entMefpaiApp.etablissement.telephone">Telephone</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col" jhiSortBy="persoAdmin.nom">
             <span jhiTranslate="entMefpaiApp.etablissement.persoAdmin">Perso Admin</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="commune.nomCom">
+            <span jhiTranslate="entMefpaiApp.etablissement.commune">Commune</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="inspection.nomInspec">
             <span jhiTranslate="entMefpaiApp.etablissement.inspection">Inspection</span> <fa-icon icon="sort"></fa-icon>
@@ -55,9 +64,16 @@
           </td>
           <td>{{ etablissement.nomEtab }}</td>
           <td jhiTranslate="{{ 'entMefpaiApp.TypeEtab.' + etablissement.typeEtab }}">{{ etablissement.typeEtab }}</td>
+          <td>{{ etablissement.email }}</td>
+          <td>{{ etablissement.telephone }}</td>
           <td>
             <div *ngIf="etablissement.persoAdmin">
               <a [routerLink]="['/perso-admin', etablissement.persoAdmin?.id, 'view']">{{ etablissement.persoAdmin?.nom }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="etablissement.commune">
+              <a [routerLink]="['/commune', etablissement.commune?.id, 'view']">{{ etablissement.commune?.nomCom }}</a>
             </div>
           </td>
           <td>

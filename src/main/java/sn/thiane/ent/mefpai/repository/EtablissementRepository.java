@@ -27,18 +27,18 @@ public interface EtablissementRepository extends EtablissementRepositoryWithBagR
     }
 
     @Query(
-        value = "select distinct etablissement from Etablissement etablissement left join fetch etablissement.persoAdmin left join fetch etablissement.inspection",
+        value = "select distinct etablissement from Etablissement etablissement left join fetch etablissement.persoAdmin left join fetch etablissement.commune left join fetch etablissement.inspection",
         countQuery = "select count(distinct etablissement) from Etablissement etablissement"
     )
     Page<Etablissement> findAllWithToOneRelationships(Pageable pageable);
 
     @Query(
-        "select distinct etablissement from Etablissement etablissement left join fetch etablissement.persoAdmin left join fetch etablissement.inspection"
+        "select distinct etablissement from Etablissement etablissement left join fetch etablissement.persoAdmin left join fetch etablissement.commune left join fetch etablissement.inspection"
     )
     List<Etablissement> findAllWithToOneRelationships();
 
     @Query(
-        "select etablissement from Etablissement etablissement left join fetch etablissement.persoAdmin left join fetch etablissement.inspection where etablissement.id =:id"
+        "select etablissement from Etablissement etablissement left join fetch etablissement.persoAdmin left join fetch etablissement.commune left join fetch etablissement.inspection where etablissement.id =:id"
     )
     Optional<Etablissement> findOneWithToOneRelationships(@Param("id") Long id);
 }

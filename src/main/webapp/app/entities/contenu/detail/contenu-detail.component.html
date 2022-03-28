@@ -21,7 +21,7 @@
         <dt><span jhiTranslate="entMefpaiApp.contenu.seance">Seance</span></dt>
         <dd>
           <div *ngIf="contenu.seance">
-            <a [routerLink]="['/seance', contenu.seance?.id, 'view']">{{ contenu.seance?.id }}</a>
+            <a [routerLink]="['/seance', contenu.seance?.id, 'view']">{{ contenu.seance?.jourSeance }}</a>
           </div>
         </dd>
       </dl>

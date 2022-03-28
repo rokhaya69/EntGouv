@@ -36,7 +36,7 @@
           <th scope="col" jhiSortBy="libelleCours">
             <span jhiTranslate="entMefpaiApp.cours.libelleCours">Libelle Cours</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="syllabus.id">
+          <th scope="col" jhiSortBy="syllabus.syllabus">
             <span jhiTranslate="entMefpaiApp.cours.syllabus">Syllabus</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="matiere.intituleMatiere">
@@ -59,7 +59,7 @@
           <td>{{ cours.libelleCours }}</td>
           <td>
             <div *ngIf="cours.syllabus">
-              <a [routerLink]="['/syllabus', cours.syllabus?.id, 'view']">{{ cours.syllabus?.id }}</a>
+              <a [routerLink]="['/syllabus', cours.syllabus?.id, 'view']">{{ cours.syllabus?.syllabus }}</a>
             </div>
           </td>
           <td>

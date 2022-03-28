@@ -67,7 +67,7 @@
     "webapp:test": "npm run test --"
   },
   "config": {
-    "backend_port": "9000",
+    "backend_port": "9797",
     "default_environment": "prod",
     "packaging": "jar"
   },

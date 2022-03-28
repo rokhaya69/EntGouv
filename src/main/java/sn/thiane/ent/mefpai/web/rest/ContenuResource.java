@@ -149,12 +149,21 @@ public class ContenuResource {
      * {@code GET  /contenus} : get all the contenus.
      *
      * @param pageable the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of contenus in body.
      */
     @GetMapping("/contenus")
-    public ResponseEntity<List<Contenu>> getAllContenus(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<Contenu>> getAllContenus(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false, defaultValue = "true") boolean eagerload
+    ) {
         log.debug("REST request to get a page of Contenus");
-        Page<Contenu> page = contenuRepository.findAll(pageable);
+        Page<Contenu> page;
+        if (eagerload) {
+            page = contenuRepository.findAllWithEagerRelationships(pageable);
+        } else {
+            page = contenuRepository.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -168,7 +177,7 @@ public class ContenuResource {
     @GetMapping("/contenus/{id}")
     public ResponseEntity<Contenu> getContenu(@PathVariable Long id) {
         log.debug("REST request to get Contenu : {}", id);
-        Optional<Contenu> contenu = contenuRepository.findById(id);
+        Optional<Contenu> contenu = contenuRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(contenu);
     }
 

@@ -22,6 +22,14 @@
         <dd>
           <span jhiTranslate="{{ 'entMefpaiApp.TypeInspec.' + inspection.typeInspec }}">{{ inspection.typeInspec }}</span>
         </dd>
+        <dt><span jhiTranslate="entMefpaiApp.inspection.email">Email</span></dt>
+        <dd>
+          <span>{{ inspection.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="entMefpaiApp.inspection.telephone">Telephone</span></dt>
+        <dd>
+          <span>{{ inspection.telephone }}</span>
+        </dd>
         <dt><span jhiTranslate="entMefpaiApp.inspection.commune">Commune</span></dt>
         <dd>
           <div *ngIf="inspection.commune">

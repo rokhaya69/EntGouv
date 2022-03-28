@@ -12,7 +12,7 @@ application {
     buildTool maven,
     languages [fr,en],
     nativeLanguage fr,
-	serverPort 9000
+	serverPort 9797
   }
   entities *
 }
@@ -41,9 +41,13 @@ entity Groupe{
     nomGroupe String required unique
 }
 entity Seance {
-  	dateSeance LocalDate required,
+    jourSeance Jour required,
+    dateSeance LocalDate required,
     dateDebut Instant required,
     dateFin Instant required
+}
+enum Jour{
+Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi
 }
 entity Contenu{
     contenu String required unique
@@ -133,7 +137,12 @@ entity Professeur {
 ////////////Parametrage-Entities///////////
  entity Etablissement{
   nomEtab String required,
-  typeEtab TypeEtab required
+  typeEtab TypeEtab required,
+  @unique
+  @email
+  email String required,
+  @unique 
+  telephone String required,
   }
  enum TypeEtab {
   LyceeTech,
@@ -152,22 +161,22 @@ Peche,
 Elevage,
 Mine_carrieres,
 Artisanat,
-BTP,
+Batimat_Travaux_Publiques,
 Mecanique,
 Menuiserie_Bois,
 Habillement,
 Agroalimentaire,
-Electrotech_Elec_Ener,
+Electrotechnique_Electrique_Energetique,
 Hydraulique,
 Structure_Metallique,
 Structure_Plastique,
 Beaute_Esthetique,
-Dev_Territorial,
+Developpement_Territorial,
 Droit,
-Eco_Ges_Com_Logis,
-Insdus_culturelle_et_creative,
-Info_et_numerique,
-Restau_et_hotellorie,
+Economie_Gestion_Commerce_Logistique,
+Insdustrie_culturelle_et_creative,
+Informatique_et_numerique,
+Restauration_et_hotellorie,
 Sante_biologie_chimie,
 Sport,
 Tourisme,
@@ -220,6 +229,11 @@ nomCom String required
 entity Inspection{
 nomInspec String required,
 typeInspec TypeInspec required,
+@unique
+  @email
+  email String required,
+  @unique 
+  telephone String required,
 }
 enum TypeInspec{
 IA, IEF
@@ -252,8 +266,8 @@ uneNote Integer required
 //////////OneToOne/////////
 relationship OneToOne{
 ////Pedagogie
-Contenu to Seance,  
-Cours to Syllabus
+Contenu{Seance(jourSeance)} to Seance,  
+Cours{Syllabus(syllabus)} to Syllabus
 ////Users
 PersoAdmin{User(login)} to User,
 Parent{User(login)} to User,
@@ -264,6 +278,7 @@ Inspection{Commune(nomCom)} to Commune,
 Programme{Filiere(nomFiliere)} to Filiere,
 Programme{Serie(nomSerie)} to Serie,
 Etablissement{PersoAdmin(nom)} to PersoAdmin,
+Etablissement{Commune(nomCom)} to Commune,
 Inspection{PersoAdmin(nom)} to PersoAdmin
 ///Evaluation
 Note{Apprenant(nom)} to Apprenant

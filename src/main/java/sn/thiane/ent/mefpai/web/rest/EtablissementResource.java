@@ -137,6 +137,12 @@ public class EtablissementResource {
                 if (etablissement.getTypeEtab() != null) {
                     existingEtablissement.setTypeEtab(etablissement.getTypeEtab());
                 }
+                if (etablissement.getEmail() != null) {
+                    existingEtablissement.setEmail(etablissement.getEmail());
+                }
+                if (etablissement.getTelephone() != null) {
+                    existingEtablissement.setTelephone(etablissement.getTelephone());
+                }
 
                 return existingEtablissement;
             })
