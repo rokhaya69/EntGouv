@@ -7,20 +7,93 @@
     <h3 class="display-4"><span></span>Environnement Numérique de Travail du Mefpai</h3>
 
     <!-- <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p> -->
+    <!-- //////////////////////Blog Carousel//////////////////////// -->
+
+    <section>
+      <div class="blog">
+        <div class="container">
+          <div class="owl-carousel owl-theme blog-post">
+            <div class="blog-content">
+              <img src="./assets/Blog-post/post-1.jpg" alt="post-1" />
+              <div class="blog-title">
+                <h3>Apprenant/Parent</h3>
+                <button class="btn btn-blog" [ngSwitch]="account !== null">
+                  <div class="alert alert-success" *ngSwitchCase="true">
+                    <span
+                      id="home-logged-message"
+                      *ngIf="account"
+                      jhiTranslate="home.logged.message"
+                      [translateValues]="{ username: account.login }"
+                      >You are logged in as user "{{ account.login }}".</span
+                    >
+                  </div>
+
+                  <div class="alert alert-warning" *ngSwitchCase="false">
+                    <span jhiTranslate="global.messages.info.authenticated.prefix">to </span>
+                    <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div class="blog-content">
+              <img src="./assets/Blog-post/post-1.jpg" alt="post-1" />
+              <div class="blog-title">
+                <h3>Professeur</h3>
+                <button class="btn btn-blog" [ngSwitch]="account !== null">
+                  <div class="alert alert-success" *ngSwitchCase="true">
+                    <span
+                      id="home-logged-message"
+                      *ngIf="account"
+                      jhiTranslate="home.logged.message"
+                      [translateValues]="{ username: account.login }"
+                      >You are logged in as user "{{ account.login }}".</span
+                    >
+                  </div>
+
+                  <div class="alert alert-warning" *ngSwitchCase="false">
+                    <span jhiTranslate="global.messages.info.authenticated.prefix">to </span>
+                    <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div class="blog-content">
+              <img src="./assets/Blog-post/post-1.jpg" alt="post-1" />
+              <div class="blog-title">
+                <h3>Personnel Administratif</h3>
+                <button class="btn btn-blog" [ngSwitch]="account !== null">
+                  <div class="alert alert-success" *ngSwitchCase="true">
+                    <span
+                      id="home-logged-message"
+                      *ngIf="account"
+                      jhiTranslate="home.logged.message"
+                      [translateValues]="{ username: account.login }"
+                      >You are logged in as user "{{ account.login }}".</span
+                    >
+                  </div>
+
+                  <div class="alert alert-warning" *ngSwitchCase="false">
+                    <span jhiTranslate="global.messages.info.authenticated.prefix">to </span>
+                    <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ///////////////////////Blog Carousel////////////////////// -->
+    <!-- <span jhiTranslate="global.messages.info.authenticated.suffix"
+          >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and
+          password="user").</span
+        > -->
 
     <div [ngSwitch]="account !== null">
       <div class="alert alert-success" *ngSwitchCase="true">
         <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message" [translateValues]="{ username: account.login }"
           >You are logged in as user "{{ account.login }}".</span
-        >
-      </div>
-
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
-        <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a
-        ><span jhiTranslate="global.messages.info.authenticated.suffix"
-          >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and
-          password="user").</span
         >
       </div>
 
